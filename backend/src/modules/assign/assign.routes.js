@@ -1,4 +1,5 @@
 const express = require('express');
+const authMiddleware = require('../../middleware/auth.middleware')
 const { getAllAssignTask, getAllAssignProject, assignTask, assignProject, deleteAssignById} = require('./assign.controller');
 const router = express.Router();
 

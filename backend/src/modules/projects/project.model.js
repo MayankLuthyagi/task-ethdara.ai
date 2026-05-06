@@ -3,12 +3,21 @@ const projectSchema = new mongoose.Schema(
     {
         name: {
             type: String,
-            required : true
+            required: true
         },
         detail: {
             type: String,
-            require : true
+            required: true
+        },
+        createdBy: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+            required: true
+        },
+        createdAt: {
+            type: Date,
+            default: Date.now
         }
     }
 );
-module.exports = mongoose.model('Projects', 'projectSchema');
+module.exports = mongoose.model('Projects', projectSchema);
