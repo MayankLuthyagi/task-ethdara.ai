@@ -1,4 +1,5 @@
 const TaskAssign = require('./taskAssign.model');
+const User = require('../auth/auth.model');
 
 exports.getAllAssignedTasks = async (req, res, next) => {
     try {
@@ -25,7 +26,23 @@ exports.getAssignedTasksByUser = async (req, res, next) => {
 
 exports.assignTask = async (req, res, next) => {
     try {
-        const { user_id, task_id } = req.body;
+        const { user_id, task_id, deadline } = req.body;
+
+        // Validate user exists and is a member (not admin)
+        const user = await User.findById(user_id);
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found"
+            });
+        }
+
+        if (user.role !== 'member') {
+            return res.status(400).json({
+                success: false,
+                message: "Tasks can only be assigned to members, not admins"
+            });
+        }
 
         const existingAssignment = await TaskAssign.findOne({
             user_id: user_id,
@@ -41,7 +58,8 @@ exports.assignTask = async (req, res, next) => {
 
         const taskAssign = await TaskAssign.create({
             user_id,
-            task_id
+            task_id,
+            deadline
         });
 
         const populatedAssign = await taskAssign.populate([

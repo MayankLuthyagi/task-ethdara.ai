@@ -3,10 +3,12 @@ import useAuth from '../../hooks/useAuth';
 import * as dashboardService from '../../services/dashboardService';
 import * as projectService from '../../services/projectService';
 import * as taskService from '../../services/taskService';
+import * as taskAssignService from '../../services/taskAssignService';
 import * as projectAssignService from '../../services/projectAssignService';
 import * as usersService from '../../services/usersService';
 import ProjectForm from '../../components/ProjectForm';
 import TaskForm from '../../components/TaskForm';
+import TaskAssignModal from '../../components/TaskAssignModal';
 import AssignMemberForm from '../../components/AssignMemberForm';
 import MemberForm from '../../components/MemberForm';
 import styles from './Dashboard.module.css';
@@ -30,6 +32,8 @@ export default function Dashboard() {
     const [showTaskForm, setShowTaskForm] = useState(false);
     const [showAssignForm, setShowAssignForm] = useState(false);
     const [showMemberForm, setShowMemberForm] = useState(false);
+    const [showTaskAssign, setShowTaskAssign] = useState(false);
+    const [assigningTask, setAssigningTask] = useState(null);
 
     useEffect(() => {
         setLoading(true);
@@ -107,6 +111,24 @@ export default function Dashboard() {
         }
     };
 
+    const handleTaskAssignClick = (task) => {
+        setAssigningTask(task);
+        setShowTaskAssign(true);
+    };
+
+    const handleTaskAssign = async (payload) => {
+        try {
+            await taskAssignService.assignTask(payload);
+            setShowTaskAssign(false);
+            // Refresh tasks
+            const taskRes = await taskService.fetchTasks();
+            setTasks(taskRes.data || []);
+        } catch (err) {
+            console.error('Error assigning task:', err);
+            alert(err.message || 'Failed to assign task');
+        }
+    };
+
     const getProjectTasks = (projectId) => {
         return tasks.filter(t => t.projectId?._id === projectId);
     };
@@ -148,7 +170,6 @@ export default function Dashboard() {
                     </div>
 
                     <div style={{ marginTop: 16 }}>
-                        <h3>Task Status</h3>
                         <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
                             {Object.entries(data.taskStatus || {}).map(([k, v]) => (
                                 <div key={k} className="card small">
@@ -160,7 +181,6 @@ export default function Dashboard() {
                     </div>
 
                     <div style={{ marginTop: 30 }}>
-                        <h3>Projects & Tasks</h3>
                         <div className={styles.tableContainer}>
                             <table className={styles.projectTable}>
                                 <thead>
@@ -170,7 +190,8 @@ export default function Dashboard() {
                                         <th>Description</th>
                                         <th>Due Date</th>
                                         <th>Status</th>
-                                        <th>Assigned To</th>
+                                        <th style={{ minWidth: '150px' }}>Assigned To</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -181,24 +202,41 @@ export default function Dashboard() {
                                                 return (
                                                     <tr key={project._id}>
                                                         <td className={styles.projectName}>{project.name}</td>
-                                                        <td colSpan="5" style={{ textAlign: 'center', color: '#999' }}>No tasks</td>
+                                                        <td colSpan="6" style={{ textAlign: 'center', color: '#999' }}>No tasks</td>
                                                     </tr>
                                                 );
                                             }
                                             return projectTasks.map((task, idx) => (
                                                 <tr key={task._id}>
                                                     {idx === 0 && <td className={styles.projectName} rowSpan={projectTasks.length}>{project.name}</td>}
-                                                    <td>{task.name}</td>
+                                                    <td>
+                                                        <div style={{ fontWeight: '500' }}>{task.name}</div>
+                                                        {task.assignedTo?.name && (
+                                                            <div style={{ fontSize: '12px', color: '#0066cc', marginTop: '4px' }}>👤 {task.assignedTo.name}</div>
+                                                        )}
+                                                    </td>
                                                     <td>{task.detail}</td>
                                                     <td>{task.dueDate ? new Date(task.dueDate).toLocaleDateString() : '-'}</td>
                                                     <td><span className={`${styles.status} ${styles[task.status]}`}>{task.status}</span></td>
-                                                    <td>{task.assignedTo?.name || '-'}</td>
+                                                    <td style={{ fontWeight: '500', color: '#0066cc' }}>
+                                                        {task.assignedTo?.name ? (
+                                                            <>
+                                                                <div>{task.assignedTo.name}</div>
+                                                                <div style={{ fontSize: '12px', color: '#666', fontWeight: '400' }}>{task.assignedTo.email || ''}</div>
+                                                            </>
+                                                        ) : '-'}
+                                                    </td>
+                                                    <td>
+                                                        {user?.role === 'admin' && (
+                                                            <button onClick={() => handleTaskAssignClick(task)} style={{ padding: '6px 10px', fontSize: '12px', cursor: 'pointer', background: '#009900', color: 'white', border: 'none', borderRadius: '4px' }}>Assign</button>
+                                                        )}
+                                                    </td>
                                                 </tr>
                                             ));
                                         })
                                     ) : (
                                         <tr>
-                                            <td colSpan="6" style={{ textAlign: 'center', padding: '20px' }}>No projects found</td>
+                                            <td colSpan="7" style={{ textAlign: 'center', padding: '20px' }}>No projects found</td>
                                         </tr>
                                     )}
                                 </tbody>
@@ -248,6 +286,18 @@ export default function Dashboard() {
                         <MemberForm
                             onCancel={() => setShowMemberForm(false)}
                             onSave={handleMemberSave}
+                        />
+                    </div>
+                </div>
+            )}
+
+            {showTaskAssign && assigningTask && (
+                <div className={styles.modalOverlay}>
+                    <div className={styles.modalContent}>
+                        <TaskAssignModal
+                            task={assigningTask}
+                            onCancel={() => setShowTaskAssign(false)}
+                            onAssign={handleTaskAssign}
                         />
                     </div>
                 </div>

@@ -1,4 +1,5 @@
 const ProjectAssign = require('./projectAssign.model');
+const User = require('../auth/auth.model');
 
 exports.getAllAssignedProjects = async (req, res, next) => {
     try {
@@ -6,6 +7,36 @@ exports.getAllAssignedProjects = async (req, res, next) => {
             .populate('user_id', 'name email')
             .populate('project_id');
         return res.status(200).json({ success: true, data: allAssignedProjects });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// Get all team members (role='member') with their project assignments
+exports.getTeamMembers = async (req, res, next) => {
+    try {
+        // Get all members from users table
+        const teamMembers = await User.find({ role: 'member' });
+
+        // For each member, get their project assignments
+        const membersWithAssignments = await Promise.all(
+            teamMembers.map(async (member) => {
+                const assignments = await ProjectAssign.find({ user_id: member._id })
+                    .populate('project_id', 'name description');
+                return {
+                    _id: member._id,
+                    name: member.name,
+                    email: member.email,
+                    role: member.role,
+                    assignments: assignments
+                };
+            })
+        );
+
+        return res.status(200).json({
+            success: true,
+            data: membersWithAssignments
+        });
     } catch (error) {
         next(error);
     }
@@ -37,7 +68,23 @@ exports.getProjectMembers = async (req, res, next) => {
 
 exports.assignProject = async (req, res, next) => {
     try {
-        const { user_id, project_id, role } = req.body;
+        const { user_id, project_id, deadline } = req.body;
+
+        // Validate user exists and is a member (not admin)
+        const user = await User.findById(user_id);
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found"
+            });
+        }
+
+        if (user.role !== 'member') {
+            return res.status(400).json({
+                success: false,
+                message: "Projects can only be assigned to members, not admins"
+            });
+        }
 
         const existingAssignment = await ProjectAssign.findOne({
             user_id: user_id,
@@ -54,7 +101,8 @@ exports.assignProject = async (req, res, next) => {
         const projectAssign = await ProjectAssign.create({
             user_id,
             project_id,
-            role: role || 'member'
+            deadline,
+            role: 'member'
         });
 
         const populatedAssign = await projectAssign.populate([

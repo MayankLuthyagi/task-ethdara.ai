@@ -4,6 +4,8 @@ import * as taskService from '../../services/taskService';
 import * as taskAssignService from '../../services/taskAssignService';
 import TaskForm from '../../components/TaskForm';
 import TaskAssignModal from '../../components/TaskAssignModal';
+import Modal from '../../components/Modal';
+import styles from './Dashboard.module.css';
 
 export default function Tasks() {
     const { user } = useAuth() || {};
@@ -65,32 +67,69 @@ export default function Tasks() {
 
     return (
         <div>
-            <h2>Tasks</h2>
-            {user.role === 'admin' && <button onClick={handleCreate}>New Task</button>}
-            {loading && <div>Loading...</div>}
-            <div>
-                {tasks.map((t) => (
-                    <div key={t._id} style={{ border: '1px solid #ddd', padding: 8, margin: 8 }}>
-                        <h3>{t.name}</h3>
-                        <p>{t.detail}</p>
-                        <div>Project: {t.projectId?.name}</div>
-                        <div>Due: {t.dueDate ? new Date(t.dueDate).toLocaleDateString() : '-'}</div>
-                        <div>Status: {t.status}</div>
-                        <div>Assigned to: {t.assignedTo?.name || '-'}</div>
-                        <div style={{ marginTop: 8 }}>
-                            {user.role === 'admin' && (
-                                <>
-                                    <button onClick={() => handleEdit(t)}>Edit</button>
-                                    <button onClick={() => handleDelete(t._id)}>Delete</button>
-                                    <button onClick={() => handleAssignClick(t)}>Assign</button>
-                                </>
-                            )}
-                        </div>
-                    </div>
-                ))}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+                <h2 style={{ margin: 0 }}>All Tasks</h2>
+                {user.role === 'admin' && (
+                    <button className={styles.addBtn} onClick={handleCreate}>+ New Task</button>
+                )}
             </div>
 
-            {showForm && <TaskForm initial={editing || {}} onCancel={() => setShowForm(false)} onSave={handleSave} />}
+            {loading && <div style={{ padding: '20px', textAlign: 'center' }}>Loading...</div>}
+
+            {!loading && (
+                <div className={styles.tableContainer}>
+                    <table className={styles.projectTable}>
+                        <thead>
+                            <tr>
+                                <th>Task Name</th>
+                                <th>Project</th>
+                                <th>Description</th>
+                                <th>Due Date</th>
+                                <th>Status</th>
+                                <th>Assigned To</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {tasks.length > 0 ? (
+                                tasks.map((t) => (
+                                    <tr key={t._id}>
+                                        <td className={styles.projectName}>{t.name}</td>
+                                        <td>{t.projectId?.name || '-'}</td>
+                                        <td>{t.detail}</td>
+                                        <td>{t.dueDate ? new Date(t.dueDate).toLocaleDateString() : '-'}</td>
+                                        <td><span className={`${styles.status} ${styles[t.status]}`}>{t.status}</span></td>
+                                        <td>{t.assignedTo?.name || '-'}</td>
+                                        <td>
+                                            {user.role === 'admin' && (
+                                                <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+                                                    <button onClick={() => handleEdit(t)} style={{ padding: '6px 10px', fontSize: '12px', cursor: 'pointer', background: '#0066cc', color: 'white', border: 'none', borderRadius: '4px' }}>Edit</button>
+                                                    <button onClick={() => handleDelete(t._id)} style={{ padding: '6px 10px', fontSize: '12px', cursor: 'pointer', background: '#cc0000', color: 'white', border: 'none', borderRadius: '4px' }}>Delete</button>
+                                                    <button onClick={() => handleAssignClick(t)} style={{ padding: '6px 10px', fontSize: '12px', cursor: 'pointer', background: '#009900', color: 'white', border: 'none', borderRadius: '4px' }}>Assign</button>
+                                                </div>
+                                            )}
+                                        </td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td colSpan="7" style={{ textAlign: 'center', padding: '20px', color: '#999' }}>No tasks found</td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
+                </div>
+            )}
+
+            {showForm && (
+                <Modal onClose={() => setShowForm(false)}>
+                    <TaskForm
+                        initial={editing || {}}
+                        onCancel={() => setShowForm(false)}
+                        onSave={handleSave}
+                    />
+                </Modal>
+            )}
             {showAssign && assigningTask && (
                 <TaskAssignModal task={assigningTask} onCancel={() => setShowAssign(false)} onAssign={handleAssign} />
             )}

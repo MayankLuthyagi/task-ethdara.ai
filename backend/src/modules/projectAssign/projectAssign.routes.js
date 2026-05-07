@@ -3,6 +3,7 @@ const authMiddleware = require('../../middleware/auth.middleware');
 const authorizeRoles = require('../../middleware/role.middleware');
 const {
     getAllAssignedProjects,
+    getTeamMembers,
     getAssignedProjectsByUser,
     getProjectMembers,
     assignProject,
@@ -15,6 +16,8 @@ const {
 const router = express.Router();
 
 router.get('/', authMiddleware, authorizeRoles('admin'), getAllAssignedProjects);
+
+router.get('/team/members', authMiddleware, authorizeRoles('admin'), getTeamMembers);
 
 router.get('/user/:userId', authMiddleware, authorizeRoles('admin'), getAssignedProjectsByUser);
 

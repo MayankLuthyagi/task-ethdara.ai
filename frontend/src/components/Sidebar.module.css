@@ -91,7 +91,6 @@
 .navItem.active {
     background: var(--accent-bg);
     color: var(--accent);
-    border-left: 3px solid var(--accent);
     padding-left: 13px;
     font-weight: 500;
 }

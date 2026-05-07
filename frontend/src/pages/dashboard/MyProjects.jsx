@@ -43,6 +43,7 @@ export default function MyProjects() {
                         <div><strong>{m.project_id?.name}</strong></div>
                         <div>Role: {m.role}</div>
                         <div>Status: {m.status}</div>
+                        <div>Deadline: {m.deadline ? new Date(m.deadline).toLocaleDateString() : '-'}</div>
                         <div style={{ marginTop: 8 }}>
                             <button onClick={() => handleStatusToggle(m)}>{m.status === 'pending' ? 'Mark Completed' : 'Mark Pending'}</button>
                         </div>

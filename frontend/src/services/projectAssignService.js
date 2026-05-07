@@ -4,6 +4,10 @@ export async function getAllAssigned() {
     return api.request('/project-assign');
 }
 
+export async function getTeamMembers() {
+    return api.request('/project-assign/team/members');
+}
+
 export async function getAssignedByUser(userId) {
     return api.request(`/project-assign/user/${userId}`);
 }

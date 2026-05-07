@@ -9,6 +9,7 @@ export default function AssignMemberForm({ initial = {}, onCancel, onSave }) {
     const [userId, setUserId] = useState(initial.user_id || '');
     const [projectId, setProjectId] = useState(initial.project_id || '');
     const [role, setRole] = useState(initial.role || 'member');
+    const [deadline, setDeadline] = useState(initial.deadline || '');
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -20,7 +21,7 @@ export default function AssignMemberForm({ initial = {}, onCancel, onSave }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSave({ user_id: userId, project_id: projectId, role });
+        onSave({ user_id: userId, project_id: projectId, role, deadline: deadline || undefined });
     };
 
     return (
@@ -54,6 +55,16 @@ export default function AssignMemberForm({ initial = {}, onCancel, onSave }) {
                     <option value="lead">Lead</option>
                     <option value="contributor">Contributor</option>
                 </select>
+            </div>
+
+            <div className={styles.formGroup}>
+                <label>Deadline (Optional)</label>
+                <input
+                    type="date"
+                    value={deadline}
+                    onChange={(e) => setDeadline(e.target.value)}
+                    disabled={loading}
+                />
             </div>
 
             <div className={styles.formActions}>

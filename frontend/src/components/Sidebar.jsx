@@ -40,13 +40,6 @@ export default function Sidebar() {
                         <img src="/logo.webp" alt="Ethara Logo" className={styles.logoIcon} />
                         {isOpen && <span className={styles.logoText}>Ethara</span>}
                     </div>
-                    <button
-                        className={styles.toggleBtn}
-                        onClick={() => setIsOpen(!isOpen)}
-                        title={isOpen ? 'Collapse' : 'Expand'}
-                    >
-                        {isOpen ? '<' : '>'}
-                    </button>
                 </div>
 
                 {/* Navigation */}
