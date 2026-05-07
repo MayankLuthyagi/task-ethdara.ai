@@ -81,7 +81,7 @@ exports.deleteTaskById = async (req, res, next) => {
     try {
         const taskId = req.params.id;
         const { name, detail, status, dueDate, assignedTo } = req.body;
-        const task = await Tasks.findByIdAndUpdate(taskId, { name, detail, status, dueDate, assignedTo }, { new: true });
+        const task = await Tasks.findByIdAndDelete(taskId, { name, detail, status, dueDate, assignedTo }, { new: true });
         if (!task) {
             return res.status(400).json({ success: false, message: "Task Not Found" });
         }

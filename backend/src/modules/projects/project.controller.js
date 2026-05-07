@@ -79,7 +79,7 @@ exports.deleteProjectById = async (req, res, next) => {
     try {
         const projectId = req.params.id;
         const { name, detail } = req.body;
-        const project = await Projects.findByIdAndUpdate(projectId, { name, detail }, { new: true });
+        const project = await Projects.findByIdAndDelete(projectId, { name, detail }, { new: true });
         if (!project) {
             return res.status(400).json({ success: false, message: "Project Not Found" });
         }
