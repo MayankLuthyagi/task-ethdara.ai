@@ -11,6 +11,7 @@
     margin: 0;
     color: var(--text-h);
     font-size: 28px;
+    word-break: break-word;
 }
 
 .addButtonsContainer {
@@ -30,6 +31,7 @@
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(170, 59, 255, 0.3);
+    white-space: nowrap;
 }
 
 .addBtn:hover {
@@ -53,6 +55,7 @@
     justify-content: center;
     z-index: 2000;
     padding: 20px;
+    overflow-y: auto;
 }
 
 .modalContent {
@@ -63,6 +66,7 @@
     width: 100%;
     max-height: 90vh;
     overflow-y: auto;
+    margin: auto;
 }
 
 .modalContent>div,
@@ -85,36 +89,18 @@
     margin-bottom: 20px;
 }
 
-@media (max-width: 768px) {
-    .dashboardHeader {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .addButtonsContainer {
-        width: 100%;
-        flex-direction: column;
-    }
-
-    .addBtn {
-        width: 100%;
-    }
-
-    .modalContent {
-        max-width: calc(100vw - 40px);
-    }
-}
-
 .tableContainer {
     overflow-x: auto;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    -webkit-overflow-scrolling: touch;
 }
 
 .projectTable {
     width: 100%;
     border-collapse: collapse;
-    background: var(--bg-secondary);
+    background: var(--bg);
+    min-width: 600px;
 }
 
 .projectTable thead {
@@ -138,6 +124,7 @@
     border-bottom: 1px solid rgba(0, 0, 0, 0.08);
     color: var(--text);
     font-size: 14px;
+    word-break: break-word;
 }
 
 .projectTable tbody tr {
@@ -166,6 +153,7 @@
     font-size: 12px;
     font-weight: 600;
     text-transform: capitalize;
+    white-space: nowrap;
 }
 
 .status.pending {
@@ -188,18 +176,141 @@
     color: #155724;
 }
 
-@media (max-width: 768px) {
+/* Tablet: 768px - 1024px */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .dashboardHeader h2 {
+        font-size: 24px;
+    }
+
     .projectTable {
         font-size: 12px;
     }
 
     .projectTable th,
     .projectTable td {
-        padding: 8px 10px;
+        padding: 10px 12px;
+    }
+}
+
+/* Mobile: 480px - 768px */
+@media (max-width: 768px) {
+    .dashboardHeader {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        margin-bottom: 24px;
+    }
+
+    .dashboardHeader h2 {
+        font-size: 22px;
+        width: 100%;
+    }
+
+    .addButtonsContainer {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .addBtn {
+        width: 100%;
+        padding: 12px 16px;
+        font-size: 14px;
+    }
+
+    .modalContent {
+        max-width: calc(100vw - 32px);
+    }
+
+    .modalContent>div,
+    .modalContent>form {
+        padding: 20px;
+    }
+
+    .projectTable {
+        font-size: 13px;
+        min-width: 100%;
+    }
+
+    .projectTable th {
+        padding: 10px 8px;
+        font-size: 11px;
+    }
+
+    .projectTable td {
+        padding: 10px 8px;
+        font-size: 13px;
     }
 
     .tableContainer {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
+        border-radius: 8px;
+    }
+}
+
+/* Small phones: < 480px */
+@media (max-width: 480px) {
+    .dashboardHeader {
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+
+    .dashboardHeader h2 {
+        font-size: 20px;
+    }
+
+    .addButtonsContainer {
+        width: 100%;
+        gap: 8px;
+    }
+
+    .addBtn {
+        padding: 10px 14px;
+        font-size: 13px;
+        border-radius: 6px;
+    }
+
+    .modalOverlay {
+        padding: 12px;
+    }
+
+    .modalContent {
+        max-width: calc(100vw - 24px);
+    }
+
+    .modalContent>div,
+    .modalContent>form {
+        padding: 16px;
+    }
+
+    .modalContent h3,
+    .modalContent>div>form h3,
+    .modalContent>form h3 {
+        font-size: 18px;
+        margin-bottom: 16px;
+    }
+
+    .projectTable {
+        font-size: 12px;
+    }
+
+    .projectTable th {
+        padding: 8px 6px;
+        font-size: 10px;
+        letter-spacing: 0;
+    }
+
+    .projectTable td {
+        padding: 8px 6px;
+        font-size: 12px;
+    }
+
+    .projectName {
+        padding: 8px 6px;
+    }
+
+    .status {
+        padding: 2px 6px;
+        font-size: 10px;
     }
 }

@@ -2,38 +2,59 @@
     display: flex;
     min-height: 100vh;
     background: var(--bg);
+    flex-direction: row-reverse;
 }
 
 .mainContent {
     flex: 1;
-    margin-left: 280px;
+    margin-right: 280px;
     background: var(--bg);
-    transition: margin-left 0.3s ease;
+    transition: margin-right 0.3s ease;
     min-height: 100vh;
     padding: 32px;
+    width: 100%;
 }
 
 .mainContent.fullWidth {
-    margin-left: 0;
+    margin-right: 0;
     padding: 0;
+    width: 100%;
 }
 
-/* When sidebar is closed (collapsed state) */
-@media (max-width: 1024px) {
+/* Desktop: Default sidebar always visible */
+@media (min-width: 1025px) {
     .mainContent {
-        margin-left: 80px;
-        padding: 24px;
+        margin-right: 280px;
+        padding: 32px;
+        padding-top: 32px;
     }
 }
 
-@media (max-width: 768px) {
+/* Tablet: 769px - 1024px - Sidebar as drawer with hamburger */
+@media (max-width: 1024px) and (min-width: 769px) {
     .mainContent {
         margin-left: 0;
-        padding: 16px;
+        padding: 24px;
+        padding-top: 72px;
     }
+}
 
-    .appContainer {
-        flex-direction: column;
+/* Mobile: 480px - 768px - Sidebar as drawer with hamburger */
+@media (max-width: 768px) {
+    .mainContent {
+        margin-right: 0;
+        padding: 16px;
+        padding-top: 68px;
+        min-height: calc(100vh - 60px);
+    }
+}
+
+/* Small phones: < 480px */
+@media (max-width: 480px) {
+    .mainContent {
+        padding: 12px;
+        padding-top: 64px;
+        min-height: calc(100vh - 56px);
     }
 }
 

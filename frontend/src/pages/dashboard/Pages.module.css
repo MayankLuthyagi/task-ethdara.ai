@@ -1,0 +1,274 @@
+.pageContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.pageTitle {
+    margin: 0;
+    color: var(--text-h);
+    font-size: 28px;
+    font-weight: 600;
+    word-break: break-word;
+}
+
+.loadingMessage {
+    padding: 20px;
+    text-align: center;
+    color: var(--text);
+    font-size: 14px;
+}
+
+.gridContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px;
+    width: 100%;
+}
+
+.card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    background: var(--bg);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    word-break: break-word;
+}
+
+.card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-color: var(--accent-border);
+}
+
+.cardTitle {
+    font-weight: 600;
+    color: var(--text-h);
+    font-size: 15px;
+    margin: 0;
+}
+
+.cardDetail {
+    color: var(--text);
+    font-size: 13px;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.cardInfo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--text);
+    flex-wrap: wrap;
+}
+
+.cardActions {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+}
+
+.actionButton {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.primaryButton {
+    background: linear-gradient(135deg, var(--accent) 0%, rgba(170, 59, 255, 0.8) 100%);
+    color: white;
+}
+
+.primaryButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(170, 59, 255, 0.3);
+}
+
+.secondaryButton {
+    background: var(--accent-bg);
+    color: var(--accent);
+    border: 1px solid var(--accent-border);
+}
+
+.secondaryButton:hover {
+    background: var(--accent-border);
+    opacity: 0.9;
+}
+
+.dangerButton {
+    background: rgba(255, 68, 68, 0.1);
+    color: #ff4444;
+    border: 1px solid rgba(255, 68, 68, 0.3);
+}
+
+.dangerButton:hover {
+    background: rgba(255, 68, 68, 0.2);
+    border-color: rgba(255, 68, 68, 0.5);
+}
+
+.statusBadge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: capitalize;
+    white-space: nowrap;
+}
+
+.statusPending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.statusCompleted {
+    background: #d4edda;
+    color: #155724;
+}
+
+/* Tablet: 768px - 1024px */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .pageTitle {
+        font-size: 24px;
+    }
+
+    .gridContainer {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 14px;
+    }
+
+    .card {
+        padding: 14px;
+        gap: 6px;
+    }
+
+    .cardTitle {
+        font-size: 14px;
+    }
+
+    .cardDetail {
+        font-size: 12px;
+    }
+
+    .actionButton {
+        padding: 7px 10px;
+        font-size: 11px;
+    }
+}
+
+/* Mobile: 480px - 768px */
+@media (max-width: 768px) {
+    .pageContainer {
+        gap: 16px;
+    }
+
+    .pageTitle {
+        font-size: 22px;
+        margin-bottom: 8px;
+    }
+
+    .gridContainer {
+        grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+        gap: 12px;
+    }
+
+    .card {
+        padding: 12px;
+        gap: 6px;
+    }
+
+    .cardTitle {
+        font-size: 14px;
+    }
+
+    .cardDetail {
+        font-size: 12px;
+    }
+
+    .cardInfo {
+        font-size: 11px;
+        gap: 6px;
+    }
+
+    .cardActions {
+        gap: 6px;
+        margin-top: 6px;
+    }
+
+    .actionButton {
+        padding: 7px 10px;
+        font-size: 12px;
+        flex: 1;
+        min-width: fit-content;
+    }
+
+    .statusBadge {
+        padding: 3px 6px;
+        font-size: 10px;
+    }
+}
+
+/* Small phones: < 480px */
+@media (max-width: 480px) {
+    .pageContainer {
+        gap: 12px;
+    }
+
+    .pageTitle {
+        font-size: 19px;
+        margin-bottom: 6px;
+    }
+
+    .gridContainer {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .card {
+        padding: 10px;
+        gap: 5px;
+    }
+
+    .cardTitle {
+        font-size: 13px;
+    }
+
+    .cardDetail {
+        font-size: 11px;
+    }
+
+    .cardInfo {
+        font-size: 10px;
+        gap: 4px;
+    }
+
+    .cardActions {
+        gap: 4px;
+        margin-top: 4px;
+        flex-direction: column;
+    }
+
+    .actionButton {
+        padding: 6px 8px;
+        font-size: 11px;
+        width: 100%;
+    }
+
+    .statusBadge {
+        padding: 2px 4px;
+        font-size: 9px;
+    }
+}

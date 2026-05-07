@@ -1,20 +1,48 @@
+.hamburgerBtn {
+    display: none;
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 1001;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px;
+    cursor: pointer;
+    color: var(--text-h);
+    transition: all 0.3s ease;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    min-width: 44px;
+}
+
+.hamburgerBtn:hover {
+    background: var(--accent-bg);
+    border-color: var(--accent-border);
+    color: var(--accent);
+}
+
 .sidebar {
     position: fixed;
-    left: 0;
+    right: 0;
     top: 0;
     height: 100vh;
     width: 280px;
     background: var(--bg);
-    border-right: 1px solid var(--border);
+    border-left: 1px solid var(--border);
     display: flex;
     flex-direction: column;
-    transition: width 0.3s ease;
+    transition: all 0.3s ease;
     z-index: 1000;
     box-shadow: var(--shadow);
 }
 
 .sidebar.closed {
-    width: 80px;
+    width: 280px;
 }
 
 .header {
@@ -24,6 +52,7 @@
     justify-content: space-between;
     align-items: center;
     gap: 12px;
+    flex-shrink: 0;
 }
 
 .logo {
@@ -33,6 +62,7 @@
     font-size: 18px;
     font-weight: 600;
     color: var(--accent);
+    flex: 1;
 }
 
 .logoIcon {
@@ -40,34 +70,21 @@
     width: 32px;
     height: 32px;
     object-fit: contain;
+    flex-shrink: 0;
 }
 
 .logoText {
     color: var(--text-h);
     font-weight: 700;
-}
-
-.toggleBtn {
-    background: none;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 6px 8px;
-    cursor: pointer;
-    color: var(--text);
-    font-size: 14px;
-    transition: all 0.2s ease;
-}
-
-.toggleBtn:hover {
-    background: var(--accent-bg);
-    border-color: var(--accent-border);
-    color: var(--accent);
+    white-space: nowrap;
 }
 
 .nav {
     flex: 1;
     padding: 20px 0;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .navItem {
@@ -81,6 +98,7 @@
     border-radius: 8px;
     transition: all 0.2s ease;
     cursor: pointer;
+    font-size: 14px;
 }
 
 .navItem:hover {
@@ -114,6 +132,7 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
+    flex-shrink: 0;
 }
 
 .userInfo {
@@ -178,41 +197,164 @@
 
 .backdrop {
     display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0);
+    z-index: 999;
+    transition: background 0.3s ease;
 }
 
-/* Mobile/Tablet responsive */
-@media (max-width: 768px) {
-    .sidebar {
-        width: 280px;
-        position: fixed;
+.backdrop.visible {
+    display: block;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+/* Desktop (1025px and above) */
+@media (min-width: 1025px) {
+    .hamburgerBtn {
+        display: none !important;
     }
 
-    .sidebar.closed {
-        width: 280px;
-        transform: translateX(-100%);
+    .sidebar {
+        transform: translateX(0);
+    }
+
+    .backdrop {
+        display: none;
+    }
+}
+
+/* Tablet and Mobile (1024px and below) */
+@media (max-width: 1024px) {
+    .hamburgerBtn {
+        display: flex;
+    }
+
+    .sidebar {
+        width: 100%;
+        max-width: 280px;
+        position: fixed;
+        right: 0;
+        top: 0;
+        height: 100vh;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
     }
 
     .sidebar.open {
         transform: translateX(0);
     }
 
+    .sidebar.closed {
+        transform: translateX(100%);
+    }
+
     .backdrop {
         display: block;
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.5);
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.3s ease;
-        z-index: 999;
     }
 
     .backdrop.visible {
-        opacity: 1;
-        pointer-events: auto;
+        display: block;
+        background: rgba(0, 0, 0, 0.5);
     }
 
-    .toggleBtn {
-        display: none;
+    .nav {
+        max-height: calc(100vh - 200px);
     }
+
+    .header {
+        padding: 16px 12px;
+    }
+
+    .logoText {
+        display: block;
+    }
+
+    .logo {
+        gap: 8px;
+    }
+
+    .navItem {
+        padding: 10px 14px;
+        margin: 2px 6px;
+        font-size: 13px;
+    }
+
+    .footer {
+        padding: 12px;
+    }
+
+    .userDetails {
+        display: block;
+    }
+
+    .logoutBtn {
+        padding: 8px;
+    }
+}
+
+/* Small phones: < 480px */
+@media (max-width: 480px) {
+    .hamburgerBtn {
+        top: 12px;
+        right: 12px;
+    }
+
+    .sidebar {
+        max-width: calc(100vw - 60px);
+    }
+
+    .header {
+        padding: 12px 10px;
+    }
+
+    .navItem {
+        padding: 8px 12px;
+        margin: 2px 4px;
+        font-size: 12px;
+    }
+
+    .footer {
+        padding: 10px;
+    }
+}
+
+/* Scrollbar styling */
+.nav::-webkit-scrollbar {
+    width: 6px;
+}
+
+.nav::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.nav::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 3px;
+}
+
+.nav::-webkit-scrollbar-thumb:hover {
+    background: var(--accent);
+}
+
+.backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 999;
+}
+
+.backdrop.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.toggleBtn {
+    display: none;
 }
