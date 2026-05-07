@@ -6,6 +6,8 @@ import Projects from '../pages/dashboard/Projects';
 import Tasks from '../pages/dashboard/Tasks';
 import TeamManagement from '../pages/dashboard/TeamManagement';
 import MyProjects from '../pages/dashboard/MyProjects';
+import MyTasks from '../pages/dashboard/MyTasks';
+import TasksPage from '../pages/dashboard/Tasks';
 import ProtectedRoute from './ProtectedRoute';
 import NotFound from '../pages/404';
 
@@ -17,7 +19,8 @@ export default function AppRoutes() {
             <Route element={<ProtectedRoute />}>
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/projects" element={<Projects />} />
-                <Route path="/tasks" element={<Tasks />} />
+                <Route path="/tasks" element={<TasksPage />} />
+                <Route path="/my-tasks" element={<MyTasks />} />
                 <Route path="/team" element={<TeamManagement />} />
                 <Route path="/my-projects" element={<MyProjects />} />
             </Route>
