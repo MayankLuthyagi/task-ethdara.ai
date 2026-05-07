@@ -21,8 +21,8 @@ export default function Sidebar() {
             { path: '/', label: 'Dashboard', icon: '' },
             { path: '/projects', label: 'All Projects', icon: '' },
             { path: '/tasks', label: 'All Tasks', icon: '' },
-            { path: '/team', label: 'Team Management', icon: '' },
             { path: '/members', label: 'Members', icon: '' },
+            { path: '/team', label: 'Assignment Management', icon: '' },
         ]
         : [
             { path: '/', label: 'Dashboard', icon: '' },

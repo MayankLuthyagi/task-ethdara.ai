@@ -5,7 +5,7 @@ import * as projectAssignService from '../../services/projectAssignService';
 import ProjectForm from '../../components/ProjectForm';
 import Modal from '../../components/Modal';
 import styles from './Dashboard.module.css';
-
+import { FiEdit2, FiTrash2 } from 'react-icons/fi';
 export default function Projects() {
     const { user } = useAuth() || {};
     const [projects, setProjects] = useState([]);
@@ -126,14 +126,14 @@ export default function Projects() {
                                                         style={{ padding: '6px 10px', fontSize: '16px', cursor: 'pointer', background: '#0066cc', color: 'white', border: 'none', borderRadius: '4px' }}
                                                         title="Edit project"
                                                     >
-                                                        ✏️
+                                                        <FiEdit2 size={16} />
                                                     </button>
                                                     <button
                                                         onClick={() => handleDelete(p._id)}
                                                         style={{ padding: '6px 10px', fontSize: '16px', cursor: 'pointer', background: '#cc0000', color: 'white', border: 'none', borderRadius: '4px' }}
                                                         title="Delete project"
                                                     >
-                                                        🗑️
+                                                        <FiTrash2 size={16} />
                                                     </button>
                                                 </div>
                                             )}

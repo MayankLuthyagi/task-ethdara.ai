@@ -4,7 +4,7 @@ import * as usersService from '../../services/usersService';
 import MemberFormEdit from '../../components/MemberFormEdit';
 import Modal from '../../components/Modal';
 import styles from './Dashboard.module.css';
-
+import { FiEdit2, FiTrash2 } from 'react-icons/fi';
 export default function Members() {
     const { user } = useAuth() || {};
     const [members, setMembers] = useState([]);
@@ -120,7 +120,7 @@ export default function Members() {
                                                     }}
                                                     title="Edit member"
                                                 >
-                                                    ✏️
+                                                   <FiEdit2 size={16} />
                                                 </button>
                                                 <button
                                                     onClick={() => handleDelete(m._id)}
@@ -138,7 +138,7 @@ export default function Members() {
                                                     }}
                                                     title="Delete member"
                                                 >
-                                                    🗑️
+                                                    <FiTrash2 size={16} />
                                                 </button>
                                             </div>
                                         </td>
