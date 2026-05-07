@@ -5,7 +5,7 @@ const { getDashboardSummary, getMyDashboardSummary } = require('./dashboard.cont
 
 const router = express.Router();
 
-router.get('/summary', authMiddleware, authorizeRoles('admin', 'moderator'), getDashboardSummary);
+router.get('/summary', authMiddleware, authorizeRoles('admin'), getDashboardSummary);
 router.get('/my-summary', authMiddleware, getMyDashboardSummary);
 
 module.exports = router;
