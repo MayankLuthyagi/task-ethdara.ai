@@ -1,9 +1,23 @@
 const Tasks = require('./task.model');
+const TaskAssign = require('../taskAssign/taskAssign.model');
+
+const isAdmin = (user) => user && user.role === 'admin';
+
+const getAssignedTaskIds = async (userId) => {
+    const rows = await TaskAssign.find({ user_id: userId }).select('task_id');
+    return rows.map((item) => item.task_id);
+};
 
 exports.getTasks = async (req, res, next) => {
     try {
-        const allTasks = await Tasks.find().populate('assignedTo', 'name email').populate('projectId', 'name');
-        return res.status(200).json({ success: true, data: allTasks });
+        if (isAdmin(req.user)) {
+            const allTasks = await Tasks.find().populate('assignedTo', 'name email').populate('projectId', 'name');
+            return res.status(200).json({ success: true, data: allTasks });
+        }
+
+        const taskIds = await getAssignedTaskIds(req.user.id);
+        const memberTasks = await Tasks.find({ _id: { $in: taskIds } }).populate('assignedTo', 'name email').populate('projectId', 'name');
+        return res.status(200).json({ success: true, data: memberTasks });
     } catch (error) {
         next(error);
     }
@@ -16,6 +30,18 @@ exports.getTaskById = async (req, res, next) => {
         if (!task) {
             return res.status(400).json({ success: false, message: "Task Not Found" });
         }
+
+        if (!isAdmin(req.user)) {
+            const memberAccess = await TaskAssign.findOne({
+                user_id: req.user.id,
+                task_id: taskId
+            });
+
+            if (!memberAccess) {
+                return res.status(403).json({ success: false, message: 'Access Denied' });
+            }
+        }
+
         return res.status(200).json({
             success: true,
             message: "Task found",
@@ -29,6 +55,10 @@ exports.getTaskById = async (req, res, next) => {
 
 exports.addTask = async (req, res, next) => {
     try {
+        if (!isAdmin(req.user)) {
+            return res.status(403).json({ success: false, message: 'Access Denied' });
+        }
+
         const { name, detail, projectId, dueDate } = req.body;
         if (!name || !detail || !projectId) {
             return res.status(400).json({ success: false, message: "Name, detail, and projectId are required" });
@@ -55,6 +85,10 @@ exports.addTask = async (req, res, next) => {
 
 exports.updateTaskById = async (req, res, next) => {
     try {
+        if (!isAdmin(req.user)) {
+            return res.status(403).json({ success: false, message: 'Access Denied' });
+        }
+
         const taskId = req.params.id;
         const updatedTask = await Tasks.findByIdAndUpdate(
             taskId,
@@ -79,6 +113,10 @@ exports.updateTaskById = async (req, res, next) => {
 
 exports.deleteTaskById = async (req, res, next) => {
     try {
+        if (!isAdmin(req.user)) {
+            return res.status(403).json({ success: false, message: 'Access Denied' });
+        }
+
         const taskId = req.params.id;
         const task = await Tasks.findByIdAndDelete(taskId);
         if (!task) {

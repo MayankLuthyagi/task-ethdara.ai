@@ -16,11 +16,11 @@ const userSchema = new mongoose.Schema(
         },
         role: {
             type: String,
-            enum: ['admin', 'moderator', 'member'],
+            enum: ['admin', 'member'],
             required: true,
             default: 'member'
-        },        
-});
+        },
+    });
 module.exports = mongoose.model(
     'User', userSchema
 )

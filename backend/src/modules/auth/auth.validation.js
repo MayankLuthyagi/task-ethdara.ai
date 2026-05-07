@@ -1,4 +1,4 @@
-const allowedRoles = ['admin', 'moderator', 'member'];
+const allowedRoles = ['admin', 'member'];
 
 const isNonEmptyString = (value) => typeof value === 'string' && value.trim().length > 0;
 

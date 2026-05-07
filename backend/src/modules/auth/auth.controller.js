@@ -1,6 +1,17 @@
 const User = require('./auth.model');
 const bcrypt = require('bcryptjs');
 const generateToken = require('../../utils/generateToken');
+
+const sanitizeUser = (userDoc) => {
+    if (!userDoc) {
+        return null;
+    }
+
+    const safeUser = userDoc.toObject();
+    delete safeUser.password;
+    return safeUser;
+};
+
 exports.addUser = async (req, res, next) => {
     try {
         const { name, email, password, role } = req.body;
@@ -20,8 +31,7 @@ exports.addUser = async (req, res, next) => {
             role
         });
 
-        const safeUser = user.toObject();
-        delete safeUser.password;
+        const safeUser = sanitizeUser(user);
 
         res.status(201).json(safeUser);
     } catch (error) {
@@ -30,9 +40,9 @@ exports.addUser = async (req, res, next) => {
 }
 
 exports.signIn = async (req, res, next) => {
-    try{
-        const {email, password} = req.body;
-        const user = await User.findOne({email})
+    try {
+        const { email, password } = req.body;
+        const user = await User.findOne({ email })
         if (!user) {
             return res.status(400).json({
                 message: 'User not found'
@@ -46,12 +56,13 @@ exports.signIn = async (req, res, next) => {
         }
 
         const token = generateToken(user);
+        const safeUser = sanitizeUser(user);
         res.json({
             message: 'Login successful',
             token,
-            user
-        });        
-    } catch (error){
+            user: safeUser
+        });
+    } catch (error) {
         next(error);
     }
 
