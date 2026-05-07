@@ -23,7 +23,7 @@ export default function TaskAssignModal({ task = {}, onCancel, onAssign }) {
                     <label>User</label>
                     <select value={selectedUser} onChange={(e) => setSelectedUser(e.target.value)} required>
                         <option value="">Select user</option>
-                        {users.map((u) => (<option key={u._id} value={u._id}>{u.name} — {u.email}</option>))}
+                        {users.map((u) => (<option key={u._id} value={u._id}>{u.name} - {u.email}</option>))}
                     </select>
                 </div>
                 <div style={{ marginTop: 8 }}>

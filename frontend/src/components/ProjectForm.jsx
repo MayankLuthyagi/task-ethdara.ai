@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import styles from './Forms.module.css';
 
 export default function ProjectForm({ initial = {}, onCancel, onSave }) {
     const [name, setName] = useState(initial.name || '');
@@ -21,22 +22,37 @@ export default function ProjectForm({ initial = {}, onCancel, onSave }) {
     };
 
     return (
-        <div className="modal">
-            <form onSubmit={handleSubmit} className="modal-content">
-                <h3>{initial._id ? 'Edit Project' : 'Create Project'}</h3>
-                <div>
-                    <label>Name</label>
-                    <input value={name} onChange={(e) => setName(e.target.value)} required />
-                </div>
-                <div>
-                    <label>Detail</label>
-                    <textarea value={detail} onChange={(e) => setDetail(e.target.value)} required />
-                </div>
-                <div style={{ marginTop: 8 }}>
-                    <button type="button" onClick={onCancel} disabled={saving}>Cancel</button>
-                    <button type="submit" disabled={saving}>{saving ? 'Saving...' : 'Save'}</button>
-                </div>
-            </form>
-        </div>
+        <form onSubmit={handleSubmit} className={styles.form}>
+            <h3>{initial._id ? 'Edit Project' : 'Add Project'}</h3>
+            <div className={styles.formGroup}>
+                <label>Project Name</label>
+                <input
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="Enter project name"
+                    required
+                    disabled={saving}
+                />
+            </div>
+            <div className={styles.formGroup}>
+                <label>Description</label>
+                <textarea
+                    value={detail}
+                    onChange={(e) => setDetail(e.target.value)}
+                    placeholder="Enter project description"
+                    required
+                    disabled={saving}
+                    rows="4"
+                />
+            </div>
+            <div className={styles.formActions}>
+                <button type="button" onClick={onCancel} disabled={saving} className={styles.cancelBtn}>
+                    Cancel
+                </button>
+                <button type="submit" disabled={saving} className={styles.submitBtn}>
+                    {saving ? 'Saving...' : 'Create Project'}
+                </button>
+            </div>
+        </form>
     );
 }

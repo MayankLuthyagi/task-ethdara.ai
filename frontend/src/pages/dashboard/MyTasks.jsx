@@ -37,7 +37,7 @@ export default function MyTasks() {
                     <div key={a._id} style={{ border: '1px solid #ddd', padding: 8, margin: 8 }}>
                         <div><strong>{a.task_id?.name}</strong></div>
                         <div>{a.task_id?.detail}</div>
-                        <div>Due: {a.task_id?.dueDate ? new Date(a.task_id.dueDate).toLocaleDateString() : '—'}</div>
+                        <div>Due: {a.task_id?.dueDate ? new Date(a.task_id.dueDate).toLocaleDateString() : '-'}</div>
                         <div>Status: {a.status}</div>
                         <div style={{ marginTop: 8 }}>
                             <button onClick={() => handleStatusToggle(a)}>{a.status === 'pending' ? 'Mark Completed' : 'Mark Pending'}</button>

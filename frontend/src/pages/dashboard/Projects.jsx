@@ -66,7 +66,7 @@ export default function Projects() {
                         <h3>{p.name}</h3>
                         <p>{p.detail}</p>
                         <div>
-                            <small>Created by: {p.createdBy?.name || '—'}</small>
+                            <small>Created by: {p.createdBy?.name || '-'}</small>
                         </div>
                         {user && user.role === 'admin' && (
                             <div style={{ marginTop: 8 }}>

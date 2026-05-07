@@ -74,9 +74,9 @@ export default function Tasks() {
                         <h3>{t.name}</h3>
                         <p>{t.detail}</p>
                         <div>Project: {t.projectId?.name}</div>
-                        <div>Due: {t.dueDate ? new Date(t.dueDate).toLocaleDateString() : '—'}</div>
+                        <div>Due: {t.dueDate ? new Date(t.dueDate).toLocaleDateString() : '-'}</div>
                         <div>Status: {t.status}</div>
-                        <div>Assigned to: {t.assignedTo?.name || '—'}</div>
+                        <div>Assigned to: {t.assignedTo?.name || '-'}</div>
                         <div style={{ marginTop: 8 }}>
                             {user.role === 'admin' && (
                                 <>

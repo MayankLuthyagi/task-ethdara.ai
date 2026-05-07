@@ -54,7 +54,7 @@ export default function TeamManagement() {
     };
 
     if (!user) return null;
-    if (user.role !== 'admin') return <div>Access denied — admin only</div>;
+    if (user.role !== 'admin') return <div>Access denied - admin only</div>;
 
     return (
         <div>
@@ -65,7 +65,7 @@ export default function TeamManagement() {
                 {assignments.map((a) => (
                     <div key={a._id} style={{ border: '1px solid #ddd', padding: 8, margin: 8 }}>
                         <div><strong>{a.project_id?.name}</strong></div>
-                        <div>Member: {a.user_id?.name} — {a.user_id?.email}</div>
+                        <div>Member: {a.user_id?.name} - {a.user_id?.email}</div>
                         <div>Role: {a.role}</div>
                         <div>Status: {a.status}</div>
                         <div style={{ marginTop: 8 }}>

@@ -3,19 +3,20 @@ import React from 'react';
 import { BrowserRouter, useLocation } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import AppRoutes from './routes/AppRoutes';
-import Header from './components/Header';
+import Sidebar from './components/Sidebar';
+import styles from './App.module.css';
 
 function AppLayout() {
   const location = useLocation();
   const isAuthPage = location.pathname.startsWith('/auth');
 
   return (
-    <>
-      {!isAuthPage && <Header />}
-      <main style={{ padding: 16 }}>
+    <div className={styles.appContainer}>
+      {!isAuthPage && <Sidebar />}
+      <main className={`${styles.mainContent} ${isAuthPage ? styles.fullWidth : ''}`}>
         <AppRoutes />
       </main>
-    </>
+    </div>
   );
 }
 

@@ -1,0 +1,62 @@
+.appContainer {
+    display: flex;
+    min-height: 100vh;
+    background: var(--bg);
+}
+
+.mainContent {
+    flex: 1;
+    margin-left: 280px;
+    background: var(--bg);
+    transition: margin-left 0.3s ease;
+    min-height: 100vh;
+    padding: 32px;
+}
+
+.mainContent.fullWidth {
+    margin-left: 0;
+    padding: 0;
+}
+
+/* When sidebar is closed (collapsed state) */
+@media (max-width: 1024px) {
+    .mainContent {
+        margin-left: 80px;
+        padding: 24px;
+    }
+}
+
+@media (max-width: 768px) {
+    .mainContent {
+        margin-left: 0;
+        padding: 16px;
+    }
+
+    .appContainer {
+        flex-direction: column;
+    }
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent);
+}
