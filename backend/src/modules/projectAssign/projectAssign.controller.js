@@ -128,7 +128,7 @@ exports.deleteProjectAssignById = async (req, res, next) => {
 
 exports.getMyProject = async (req, res, next) => {
     try {
-        const userId = req.user._id;
+        const userId = req.user.id;
         const myProjects = await ProjectAssign.find({ user_id: userId })
             .populate('user_id', 'name email')
             .populate('project_id');
@@ -143,7 +143,7 @@ exports.getMyProject = async (req, res, next) => {
 
 exports.updateMyProject = async (req, res, next) => {
     try {
-        const userId = req.user._id;
+        const userId = req.user.id;
         const { id } = req.params;
         const { status } = req.body;
 

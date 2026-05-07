@@ -9,7 +9,7 @@ const projectAssignSchema = new mongoose.Schema(
         },
         project_id: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Project',
+            ref: 'Projects',
             required: true
         },
         role: {

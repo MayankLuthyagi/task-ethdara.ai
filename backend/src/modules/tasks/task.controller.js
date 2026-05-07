@@ -56,7 +56,7 @@ exports.addTask = async (req, res, next) => {
 exports.updateTaskById = async (req, res, next) => {
     try {
         const taskId = req.params.id;
-        const updatedTask = await Task.findByIdAndUpdate(
+        const updatedTask = await Tasks.findByIdAndUpdate(
             taskId,
             req.body,
             {
@@ -80,8 +80,7 @@ exports.updateTaskById = async (req, res, next) => {
 exports.deleteTaskById = async (req, res, next) => {
     try {
         const taskId = req.params.id;
-        const { name, detail, status, dueDate, assignedTo } = req.body;
-        const task = await Tasks.findByIdAndDelete(taskId, { name, detail, status, dueDate, assignedTo }, { new: true });
+        const task = await Tasks.findByIdAndDelete(taskId);
         if (!task) {
             return res.status(400).json({ success: false, message: "Task Not Found" });
         }

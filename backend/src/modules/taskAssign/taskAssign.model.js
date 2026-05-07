@@ -9,7 +9,7 @@ const taskAssignSchema = new mongoose.Schema(
         },
         task_id: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Task',
+            ref: 'Tasks',
             required: true
         },
         deadline: {

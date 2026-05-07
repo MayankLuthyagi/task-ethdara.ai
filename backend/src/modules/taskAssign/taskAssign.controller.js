@@ -115,7 +115,7 @@ exports.deleteTaskAssignById = async (req, res, next) => {
 
 exports.getMyTasks = async (req, res, next) => {
     try {
-        const userId = req.user._id;
+        const userId = req.user.id;
         const myTasks = await TaskAssign.find({ user_id: userId })
             .populate('user_id', 'name email')
             .populate('task_id');
@@ -130,7 +130,7 @@ exports.getMyTasks = async (req, res, next) => {
 
 exports.updateMyTaskStatus = async (req, res, next) => {
     try {
-        const userId = req.user._id;
+        const userId = req.user.id;
         const { id } = req.params;
         const { status } = req.body;
 
