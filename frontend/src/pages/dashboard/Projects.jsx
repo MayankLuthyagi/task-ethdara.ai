@@ -3,9 +3,10 @@ import useAuth from '../../hooks/useAuth';
 import * as projectService from '../../services/projectService';
 import * as projectAssignService from '../../services/projectAssignService';
 import ProjectForm from '../../components/ProjectForm';
+import ProjectAssignModal from '../../components/ProjectAssignModal';
 import Modal from '../../components/Modal';
 import styles from './Dashboard.module.css';
-import { FiEdit2, FiTrash2 } from 'react-icons/fi';
+import { FiEdit2, FiTrash2, FiUserPlus } from 'react-icons/fi';
 export default function Projects() {
     const { user } = useAuth() || {};
     const [projects, setProjects] = useState([]);
@@ -14,6 +15,8 @@ export default function Projects() {
     const [error, setError] = useState(null);
     const [showForm, setShowForm] = useState(false);
     const [editing, setEditing] = useState(null);
+    const [showAssign, setShowAssign] = useState(false);
+    const [assigningProject, setAssigningProject] = useState(null);
 
     const load = async () => {
         setLoading(true);
@@ -58,6 +61,21 @@ export default function Projects() {
         }
     };
 
+    const handleAssignClick = (project) => {
+        console.log('Assigning project:', project);
+        setAssigningProject(project);
+        setShowAssign(true);
+    };
+
+    const handleAssign = async (payload) => {
+        try {
+            console.log('Sending project assign payload:', payload);
+            await projectAssignService.assignProject(payload);
+            setShowAssign(false);
+            load();
+        } catch (err) { alert(err.message || 'Assign failed'); }
+    };
+
     const handleSave = async (payload) => {
         try {
             if (editing && editing._id) {
@@ -92,7 +110,6 @@ export default function Projects() {
                             <tr>
                                 <th>Project Name</th>
                                 <th>Description</th>
-                                <th>Created By</th>
                                 <th>Assigned To</th>
                                 <th>Actions</th>
                             </tr>
@@ -103,7 +120,6 @@ export default function Projects() {
                                     <tr key={p._id}>
                                         <td className={styles.projectName}>{p.name}</td>
                                         <td>{p.detail}</td>
-                                        <td>{p.createdBy?.name || '-'}</td>
                                         <td>
                                             {projectMembers[p._id] && projectMembers[p._id].length > 0 ? (
                                                 <div>
@@ -135,6 +151,13 @@ export default function Projects() {
                                                     >
                                                         <FiTrash2 size={16} />
                                                     </button>
+                                                    <button
+                                                        onClick={() => handleAssignClick(p)}
+                                                        style={{ padding: '6px 10px', fontSize: '16px', cursor: 'pointer', background: '#009900', color: 'white', border: 'none', borderRadius: '4px' }}
+                                                        title="Assign project"
+                                                    >
+                                                        <FiUserPlus size={16} />
+                                                    </button>
                                                 </div>
                                             )}
                                         </td>
@@ -158,6 +181,9 @@ export default function Projects() {
                         onSave={handleSave}
                     />
                 </Modal>
+            )}
+            {showAssign && assigningProject && (
+                <ProjectAssignModal project={assigningProject} onCancel={() => setShowAssign(false)} onAssign={handleAssign} />
             )}
         </div>
     );

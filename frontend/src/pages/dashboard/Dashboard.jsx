@@ -141,22 +141,6 @@ export default function Dashboard() {
                 <div>
                     <h2>Dashboard</h2>
                 </div>
-                {user?.role === 'admin' && (
-                    <div className={styles.addButtonsContainer}>
-                        <button className={styles.addBtn} onClick={() => setShowProjectForm(true)}>
-                            + Add Project
-                        </button>
-                        <button className={styles.addBtn} onClick={() => setShowTaskForm(true)}>
-                            + Add Task
-                        </button>
-                        <button className={styles.addBtn} onClick={() => setShowMemberForm(true)}>
-                            + Add Member
-                        </button>
-                        <button className={styles.addBtn} onClick={() => setShowAssignForm(true)}>
-                            + Assign Member
-                        </button>
-                    </div>
-                )}
             </div>
 
             {loading && <div>Loading...</div>}

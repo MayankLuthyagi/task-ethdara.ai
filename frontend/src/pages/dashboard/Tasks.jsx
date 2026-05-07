@@ -6,7 +6,7 @@ import TaskForm from '../../components/TaskForm';
 import TaskAssignModal from '../../components/TaskAssignModal';
 import Modal from '../../components/Modal';
 import styles from './Dashboard.module.css';
-
+import { FiEdit2, FiTrash2, FiUserPlus } from 'react-icons/fi';
 export default function Tasks() {
     const { user } = useAuth() || {};
     const [tasks, setTasks] = useState([]);
@@ -108,21 +108,21 @@ export default function Tasks() {
                                                         style={{ padding: '6px 10px', fontSize: '16px', cursor: 'pointer', background: '#0066cc', color: 'white', border: 'none', borderRadius: '4px' }}
                                                         title="Edit task"
                                                     >
-                                                        ✏️
+                                                        <FiEdit2 size={16} />
                                                     </button>
                                                     <button
                                                         onClick={() => handleDelete(t._id)}
                                                         style={{ padding: '6px 10px', fontSize: '16px', cursor: 'pointer', background: '#cc0000', color: 'white', border: 'none', borderRadius: '4px' }}
                                                         title="Delete task"
                                                     >
-                                                        🗑️
+                                                        <FiTrash2 size={16} />
                                                     </button>
                                                     <button
                                                         onClick={() => handleAssignClick(t)}
                                                         style={{ padding: '6px 10px', fontSize: '16px', cursor: 'pointer', background: '#009900', color: 'white', border: 'none', borderRadius: '4px' }}
                                                         title="Assign task"
                                                     >
-                                                        👤
+                                                        <FiUserPlus size={16} />
                                                     </button>
                                                 </div>
                                             )}
