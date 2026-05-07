@@ -1,6 +1,16 @@
 import React, { useState } from 'react';
 import styles from './Forms.module.css';
 
+const errorStyle = {
+    padding: '12px',
+    background: 'var(--accent-bg, rgba(255, 59, 48, 0.1))',
+    color: 'var(--accent, #ff3b30)',
+    borderRadius: '8px',
+    fontSize: '14px',
+    border: '1px solid var(--border)',
+    marginBottom: '12px'
+};
+
 export default function MemberForm({ onCancel, onSave }) {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -32,13 +42,7 @@ export default function MemberForm({ onCancel, onSave }) {
             <h3>Add New Member</h3>
 
             {error && (
-                <div style={{
-                    padding: '12px',
-                    background: 'rgba(255, 59, 48, 0.1)',
-                    color: '#ff3b30',
-                    borderRadius: '8px',
-                    fontSize: '14px'
-                }}>
+                <div style={errorStyle}>
                     {error}
                 </div>
             )}

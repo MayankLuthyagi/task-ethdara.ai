@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import * as usersService from '../services/usersService';
 import * as taskService from '../services/taskService';
+import Modal from './Modal';
+import styles from './Forms.module.css';
 
 export default function TaskAssignModal({ task = {}, onCancel, onAssign }) {
     const [users, setUsers] = useState([]);
@@ -32,16 +34,16 @@ export default function TaskAssignModal({ task = {}, onCancel, onAssign }) {
     };
 
     return (
-        <div>
-            <h3 style={{ marginTop: 0, color: '#333', marginBottom: '20px' }}>Assign Task: {task.name}</h3>
-            <form onSubmit={handleSubmit}>
-                <div style={{ marginBottom: '20px' }}>
-                    <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500', color: '#333' }}>Select Team Member</label>
+        <Modal onClose={onCancel}>
+            <form onSubmit={handleSubmit} className={styles.form}>
+                <h3>Assign Task: {task.name}</h3>
+
+                <div className={styles.formGroup}>
+                    <label>Select Team Member</label>
                     <select
                         value={selectedUser}
                         onChange={(e) => setSelectedUser(e.target.value)}
                         disabled={loading}
-                        style={{ width: '100%', padding: '10px', border: '1px solid #ddd', borderRadius: '4px', fontSize: '14px' }}
                         required
                     >
                         <option value="">-- Select a user --</option>
@@ -52,33 +54,35 @@ export default function TaskAssignModal({ task = {}, onCancel, onAssign }) {
                         ))}
                     </select>
                 </div>
-                <div style={{ marginBottom: '20px' }}>
-                    <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500', color: '#333' }}>Deadline (Optional)</label>
+
+                <div className={styles.formGroup}>
+                    <label>Deadline (Optional)</label>
                     <input
                         type="date"
                         value={deadline}
                         onChange={(e) => setDeadline(e.target.value)}
                         disabled={loading}
-                        style={{ width: '100%', padding: '10px', border: '1px solid #ddd', borderRadius: '4px', fontSize: '14px' }}
                     />
                 </div>
-                <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
+
+                <div className={styles.formActions}>
                     <button
                         type="button"
                         onClick={onCancel}
-                        style={{ padding: '8px 16px', cursor: 'pointer', background: '#ccc', color: '#333', border: 'none', borderRadius: '4px', fontSize: '14px', fontWeight: '500' }}
+                        disabled={loading}
+                        className={styles.cancelBtn}
                     >
                         Cancel
                     </button>
                     <button
                         type="submit"
                         disabled={loading}
-                        style={{ padding: '8px 16px', cursor: loading ? 'not-allowed' : 'pointer', background: '#009900', color: 'white', border: 'none', borderRadius: '4px', fontSize: '14px', fontWeight: '500' }}
+                        className={styles.submitBtn}
                     >
-                        {loading ? 'Loading...' : 'Assign'}
+                        {loading ? 'Loading...' : 'Assign Task'}
                     </button>
                 </div>
             </form>
-        </div>
+        </Modal>
     );
 }

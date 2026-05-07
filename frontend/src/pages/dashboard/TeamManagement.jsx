@@ -147,15 +147,17 @@ export default function TeamManagement() {
                                                 <div style={{ display: 'flex', gap: '6px' }}>
                                                     <button
                                                         onClick={() => handleEdit(row.assignmentObj)}
-                                                        style={{ padding: '6px 10px', fontSize: '12px', cursor: 'pointer', background: '#0066cc', color: 'white', border: 'none', borderRadius: '4px' }}
+                                                        style={{ padding: '6px 10px', fontSize: '16px', cursor: 'pointer', background: '#0066cc', color: 'white', border: 'none', borderRadius: '4px' }}
+                                                        title="Edit assignment"
                                                     >
-                                                        Edit
+                                                        ✏️
                                                     </button>
                                                     <button
                                                         onClick={() => handleDelete(row.assignmentId)}
-                                                        style={{ padding: '6px 10px', fontSize: '12px', cursor: 'pointer', background: '#cc0000', color: 'white', border: 'none', borderRadius: '4px' }}
+                                                        style={{ padding: '6px 10px', fontSize: '16px', cursor: 'pointer', background: '#cc0000', color: 'white', border: 'none', borderRadius: '4px' }}
+                                                        title="Delete assignment"
                                                     >
-                                                        Delete
+                                                        🗑️
                                                     </button>
                                                 </div>
                                             )}

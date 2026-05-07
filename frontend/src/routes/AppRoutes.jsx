@@ -5,6 +5,7 @@ import Dashboard from '../pages/dashboard/Dashboard';
 import Projects from '../pages/dashboard/Projects';
 import Tasks from '../pages/dashboard/Tasks';
 import TeamManagement from '../pages/dashboard/TeamManagement';
+import Members from '../pages/dashboard/Members';
 import MyProjects from '../pages/dashboard/MyProjects';
 import MyTasks from '../pages/dashboard/MyTasks';
 import TasksPage from '../pages/dashboard/Tasks';
@@ -22,6 +23,7 @@ export default function AppRoutes() {
                 <Route path="/tasks" element={<TasksPage />} />
                 <Route path="/my-tasks" element={<MyTasks />} />
                 <Route path="/team" element={<TeamManagement />} />
+                <Route path="/members" element={<Members />} />
                 <Route path="/my-projects" element={<MyProjects />} />
             </Route>
 

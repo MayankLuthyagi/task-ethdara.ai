@@ -120,9 +120,21 @@ export default function Projects() {
                                         </td>
                                         <td>
                                             {user && user.role === 'admin' && (
-                                                <div style={{ display: 'flex', gap: '8px' }}>
-                                                    <button onClick={() => handleEdit(p)} style={{ padding: '6px 12px', cursor: 'pointer', background: '#0066cc', color: 'white', border: 'none', borderRadius: '4px' }}>Edit</button>
-                                                    <button onClick={() => handleDelete(p._id)} style={{ padding: '6px 12px', cursor: 'pointer', background: '#cc0000', color: 'white', border: 'none', borderRadius: '4px' }}>Delete</button>
+                                                <div style={{ display: 'flex', gap: '6px' }}>
+                                                    <button
+                                                        onClick={() => handleEdit(p)}
+                                                        style={{ padding: '6px 10px', fontSize: '16px', cursor: 'pointer', background: '#0066cc', color: 'white', border: 'none', borderRadius: '4px' }}
+                                                        title="Edit project"
+                                                    >
+                                                        ✏️
+                                                    </button>
+                                                    <button
+                                                        onClick={() => handleDelete(p._id)}
+                                                        style={{ padding: '6px 10px', fontSize: '16px', cursor: 'pointer', background: '#cc0000', color: 'white', border: 'none', borderRadius: '4px' }}
+                                                        title="Delete project"
+                                                    >
+                                                        🗑️
+                                                    </button>
                                                 </div>
                                             )}
                                         </td>

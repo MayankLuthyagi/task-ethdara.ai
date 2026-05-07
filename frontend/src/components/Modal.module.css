@@ -4,46 +4,86 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.6);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 1000;
     padding: 20px;
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 .modalContent {
-    background: var(--bg-secondary, white);
+    background: var(--bg);
     border-radius: 12px;
     padding: 32px;
     max-width: 500px;
     width: 100%;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     position: relative;
     max-height: 90vh;
     overflow-y: auto;
+    border: 1px solid var(--border);
+    animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modalContent h3 {
+    margin: 0 0 20px 0;
+    color: var(--text-h);
+    font-size: 22px;
+    font-weight: 600;
 }
 
 .closeBtn {
     position: absolute;
-    top: 16px;
-    right: 16px;
-    background: none;
-    border: none;
-    font-size: 28px;
+    top: 12px;
+    right: 12px;
+    background: var(--accent-bg);
+    border: 1px solid var(--border);
+    font-size: 24px;
     cursor: pointer;
     color: var(--text-h);
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 4px;
+    border-radius: 6px;
     transition: all 0.2s ease;
+    padding: 0;
 }
 
 .closeBtn:hover {
-    background: rgba(0, 0, 0, 0.1);
+    background: var(--accent-border);
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: rotate(90deg);
+}
+
+.closeBtn:active {
+    transform: rotate(90deg) scale(0.95);
 }
 
 @media (max-width: 600px) {
@@ -52,7 +92,37 @@
     }
 
     .modalContent {
-        padding: 20px;
+        padding: 24px;
         max-width: 100%;
+        max-height: 95vh;
     }
+
+    .modalContent h3 {
+        font-size: 20px;
+        margin-bottom: 16px;
+    }
+
+    .closeBtn {
+        width: 32px;
+        height: 32px;
+        font-size: 20px;
+    }
+}
+
+/* Scrollbar styling */
+.modalContent::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modalContent::-webkit-scrollbar-track {
+    background: var(--bg);
+}
+
+.modalContent::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 4px;
+}
+
+.modalContent::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-bg);
 }

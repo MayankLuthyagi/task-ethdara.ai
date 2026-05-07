@@ -11,4 +11,17 @@ export async function createUser(userData) {
     });
 }
 
-export default { fetchUsers, createUser };
+export async function updateUser(userId, userData) {
+    return api.request(`/users/${userId}`, {
+        method: 'PUT',
+        body: JSON.stringify(userData),
+    });
+}
+
+export async function deleteUser(userId) {
+    return api.request(`/users/${userId}`, {
+        method: 'DELETE',
+    });
+}
+
+export default { fetchUsers, createUser, updateUser, deleteUser };

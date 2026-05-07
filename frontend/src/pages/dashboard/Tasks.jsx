@@ -103,9 +103,27 @@ export default function Tasks() {
                                         <td>
                                             {user.role === 'admin' && (
                                                 <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
-                                                    <button onClick={() => handleEdit(t)} style={{ padding: '6px 10px', fontSize: '12px', cursor: 'pointer', background: '#0066cc', color: 'white', border: 'none', borderRadius: '4px' }}>Edit</button>
-                                                    <button onClick={() => handleDelete(t._id)} style={{ padding: '6px 10px', fontSize: '12px', cursor: 'pointer', background: '#cc0000', color: 'white', border: 'none', borderRadius: '4px' }}>Delete</button>
-                                                    <button onClick={() => handleAssignClick(t)} style={{ padding: '6px 10px', fontSize: '12px', cursor: 'pointer', background: '#009900', color: 'white', border: 'none', borderRadius: '4px' }}>Assign</button>
+                                                    <button
+                                                        onClick={() => handleEdit(t)}
+                                                        style={{ padding: '6px 10px', fontSize: '16px', cursor: 'pointer', background: '#0066cc', color: 'white', border: 'none', borderRadius: '4px' }}
+                                                        title="Edit task"
+                                                    >
+                                                        ✏️
+                                                    </button>
+                                                    <button
+                                                        onClick={() => handleDelete(t._id)}
+                                                        style={{ padding: '6px 10px', fontSize: '16px', cursor: 'pointer', background: '#cc0000', color: 'white', border: 'none', borderRadius: '4px' }}
+                                                        title="Delete task"
+                                                    >
+                                                        🗑️
+                                                    </button>
+                                                    <button
+                                                        onClick={() => handleAssignClick(t)}
+                                                        style={{ padding: '6px 10px', fontSize: '16px', cursor: 'pointer', background: '#009900', color: 'white', border: 'none', borderRadius: '4px' }}
+                                                        title="Assign task"
+                                                    >
+                                                        👤
+                                                    </button>
                                                 </div>
                                             )}
                                         </td>

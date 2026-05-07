@@ -38,12 +38,18 @@
     min-width: 0;
 }
 
+.formGroup input::placeholder,
+.formGroup textarea::placeholder {
+    color: var(--text);
+    opacity: 0.6;
+}
+
 .formGroup input:focus,
 .formGroup textarea:focus,
 .formGroup select:focus {
     outline: none;
     border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(170, 59, 255, 0.1);
+    box-shadow: 0 0 0 3px var(--accent-bg);
 }
 
 .formGroup input:disabled,
@@ -51,7 +57,7 @@
 .formGroup select:disabled {
     background: var(--accent-bg);
     cursor: not-allowed;
-    opacity: 0.7;
+    opacity: 0.6;
 }
 
 .formGroup textarea {
@@ -88,14 +94,34 @@
 }
 
 .cancelBtn:hover:not(:disabled) {
-    background: rgba(170, 59, 255, 0.15);
+    background: var(--accent-border);
     border-color: var(--accent);
+    color: var(--accent);
+}
+
+.cancelBtn:active:not(:disabled) {
+    transform: scale(0.98);
 }
 
 .submitBtn {
-    background: linear-gradient(135deg, var(--accent) 0%, rgba(170, 59, 255, 0.8) 100%);
+    background: var(--accent);
     color: white;
-    box-shadow: 0 4px 12px rgba(170, 59, 255, 0.3);
+    box-shadow: 0 4px 12px var(--accent-bg);
+    border: 1px solid transparent;
+}
+
+.submitBtn:hover:not(:disabled) {
+    opacity: 0.9;
+    box-shadow: 0 6px 16px var(--accent-bg);
+}
+
+.submitBtn:active:not(:disabled) {
+    transform: scale(0.98);
+}
+
+.submitBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
 .submitBtn:hover:not(:disabled) {
