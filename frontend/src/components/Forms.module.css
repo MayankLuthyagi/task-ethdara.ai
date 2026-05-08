@@ -1,7 +1,7 @@
 .form {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 16px;
 }
 
 .form h3 {
@@ -66,7 +66,7 @@
 
 .formGroup textarea {
     resize: vertical;
-    min-height: 100px;
+    min-height: 80px;
     font-family: inherit;
 }
 
@@ -74,8 +74,8 @@
     display: flex;
     gap: 12px;
     justify-content: flex-end;
-    margin-top: 10px;
-    padding-top: 20px;
+    margin-top: 8px;
+    padding-top: 16px;
     border-top: 1px solid var(--border);
     flex-wrap: wrap;
 }

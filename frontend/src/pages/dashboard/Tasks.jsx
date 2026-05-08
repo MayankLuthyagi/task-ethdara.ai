@@ -70,7 +70,9 @@ export default function Tasks() {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
                 <h2 style={{ margin: 0 }}>All Tasks</h2>
                 {user.role === 'admin' && (
-                    <button className={styles.addBtn} onClick={handleCreate}>+ New Task</button>
+                    <div style={{ display: 'flex', gap: '10px' }}>
+                        <button className={styles.addBtn} onClick={handleCreate}>+ Add Task</button>
+                    </div>
                 )}
             </div>
 

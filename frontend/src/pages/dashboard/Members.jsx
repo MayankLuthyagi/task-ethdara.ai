@@ -55,10 +55,14 @@ export default function Members() {
                 const res = await usersService.updateUser(editing._id, payload);
                 setMembers((s) => s.map((m) => (m._id === editing._id ? res.data : m)));
             } else {
-                // For creating new members, we'll use the auth endpoint
-                alert('Creating new members is handled through the registration process');
-                setShowForm(false);
-                return;
+                // Create new member using auth endpoint
+                const res = await usersService.createUser({
+                    name: payload.name,
+                    email: payload.email,
+                    password: payload.email, // Default password
+                    role: payload.role || 'member'
+                });
+                setMembers((s) => [res.data, ...s]);
             }
             setShowForm(false);
         } catch (err) {
@@ -120,7 +124,7 @@ export default function Members() {
                                                     }}
                                                     title="Edit member"
                                                 >
-                                                   <FiEdit2 size={16} />
+                                                    <FiEdit2 size={16} />
                                                 </button>
                                                 <button
                                                     onClick={() => handleDelete(m._id)}

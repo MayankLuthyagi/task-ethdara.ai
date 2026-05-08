@@ -114,9 +114,10 @@ export default function Login() {
                             <span>Demo Credentials</span>
                         </div>
                         <div className={styles.demoInfo}>
-                            <p><strong>User:</strong> user@example.com</p>
-                            <p><strong>Admin:</strong> admin@example.com</p>
+                            <p><strong>User:</strong> member@ethara.ai</p>
                             <p><strong>Password:</strong> password123</p>
+                            <p><strong>Admin:</strong> admin@ethara.ai</p>
+                            <p><strong>Password:</strong> admin123</p>
                         </div>
                     </div>
                 </div>

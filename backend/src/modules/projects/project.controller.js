@@ -11,12 +11,12 @@ const getAssignedProjectIds = async (userId) => {
 exports.getProjects = async (req, res, next) => {
     try {
         if (isAdmin(req.user)) {
-            const allProjects = await Projects.find().populate('createdBy', 'name email');
+            const allProjects = await Projects.find().populate('createdBy', 'name email').populate('assignedTo', 'name email');
             return res.status(200).json({ success: true, data: allProjects });
         }
 
         const projectIds = await getAssignedProjectIds(req.user.id);
-        const memberProjects = await Projects.find({ _id: { $in: projectIds } }).populate('createdBy', 'name email');
+        const memberProjects = await Projects.find({ _id: { $in: projectIds } }).populate('createdBy', 'name email').populate('assignedTo', 'name email');
         return res.status(200).json({ success: true, data: memberProjects });
     } catch (error) {
         next(error);
@@ -26,7 +26,7 @@ exports.getProjects = async (req, res, next) => {
 exports.getProjectById = async (req, res, next) => {
     try {
         const projectId = req.params.id;
-        const project = await Projects.findById(projectId).populate('createdBy', 'name email');
+        const project = await Projects.findById(projectId).populate('createdBy', 'name email').populate('assignedTo', 'name email');
         if (!project) {
             return res.status(400).json({ success: false, message: "Project Not Found" });
         }

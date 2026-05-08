@@ -32,12 +32,15 @@
     width: 100%;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     position: relative;
-    max-height: 90vh;
+    max-height: 85vh;
     overflow-y: auto;
     border: 1px solid var(--border);
     animation: slideUp 0.3s ease-out;
     margin: auto;
     box-sizing: border-box;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-border) transparent;
 }
 
 @keyframes slideUp {

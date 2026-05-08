@@ -56,9 +56,7 @@
     margin: 0;
     background: linear-gradient(135deg, var(--accent) 0%, rgba(170, 59, 255, 0.7) 100%);
     -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
     background-clip: text;
-    word-break: break-word;
 }
 
 .brandSubtitle {
@@ -79,7 +77,6 @@
     color: var(--text-h);
     padding: 12px;
     background: var(--accent-bg);
-    border-left: 3px solid var(--accent);
     border-radius: 6px;
     transition: all 0.2s ease;
     word-break: break-word;

@@ -1,5 +1,6 @@
 const ProjectAssign = require('./projectAssign.model');
 const User = require('../auth/auth.model');
+const Projects = require('../projects/project.model');
 
 exports.getAllAssignedProjects = async (req, res, next) => {
     try {
@@ -105,6 +106,13 @@ exports.assignProject = async (req, res, next) => {
             role: 'member'
         });
 
+        // Update the Project's assignedTo field (assign to first member)
+        await Projects.findByIdAndUpdate(
+            project_id,
+            { assignedTo: user_id },
+            { new: true }
+        );
+
         const populatedAssign = await projectAssign.populate([
             { path: 'user_id', select: 'name email' },
             { path: 'project_id' }
@@ -162,6 +170,18 @@ exports.deleteProjectAssignById = async (req, res, next) => {
                 success: false,
                 message: "Project assignment not found"
             });
+        }
+
+        // Check if there are any remaining assignments for this project
+        const remainingAssignments = await ProjectAssign.findOne({ project_id: projectAssign.project_id });
+
+        // If no more assignments, clear the assignedTo field
+        if (!remainingAssignments) {
+            await Projects.findByIdAndUpdate(
+                projectAssign.project_id,
+                { assignedTo: null },
+                { new: true }
+            );
         }
 
         return res.status(200).json({

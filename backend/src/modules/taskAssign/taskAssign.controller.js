@@ -1,5 +1,6 @@
 const TaskAssign = require('./taskAssign.model');
 const User = require('../auth/auth.model');
+const Tasks = require('../tasks/task.model');
 
 exports.getAllAssignedTasks = async (req, res, next) => {
     try {
@@ -62,6 +63,13 @@ exports.assignTask = async (req, res, next) => {
             deadline
         });
 
+        // Update the Task's assignedTo field
+        await Tasks.findByIdAndUpdate(
+            task_id,
+            { assignedTo: user_id },
+            { new: true }
+        );
+
         const populatedAssign = await taskAssign.populate([
             { path: 'user_id', select: 'name email' },
             { path: 'task_id' }
@@ -119,6 +127,18 @@ exports.deleteTaskAssignById = async (req, res, next) => {
                 success: false,
                 message: "Task assignment not found"
             });
+        }
+
+        // Check if there are any remaining assignments for this task
+        const remainingAssignments = await TaskAssign.findOne({ task_id: taskAssign.task_id });
+
+        // If no more assignments, clear the assignedTo field
+        if (!remainingAssignments) {
+            await Tasks.findByIdAndUpdate(
+                taskAssign.task_id,
+                { assignedTo: null },
+                { new: true }
+            );
         }
 
         return res.status(200).json({

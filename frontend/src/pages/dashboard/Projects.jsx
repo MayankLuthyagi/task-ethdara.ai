@@ -96,7 +96,9 @@ export default function Projects() {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
                 <h2 style={{ margin: 0 }}>All Projects</h2>
                 {user && user.role === 'admin' && (
-                    <button className={styles.addBtn} onClick={handleCreate}>+ New Project</button>
+                    <div style={{ display: 'flex', gap: '10px' }}>
+                        <button className={styles.addBtn} onClick={handleCreate}>+ Add Project</button>
+                    </div>
                 )}
             </div>
 
@@ -124,10 +126,12 @@ export default function Projects() {
                                             {projectMembers[p._id] && projectMembers[p._id].length > 0 ? (
                                                 <div>
                                                     {projectMembers[p._id].map((member, idx) => (
-                                                        <div key={idx} style={{ fontSize: '13px', marginBottom: idx < projectMembers[p._id].length - 1 ? '6px' : '0', color: '#0066cc', fontWeight: '500' }}>
-                                                            👤 {member.name}
-                                                            <div style={{ fontSize: '11px', color: '#666', fontWeight: '400' }}>{member.email}</div>
-                                                        </div>
+                                                        member ? (
+                                                            <div key={idx} style={{ fontSize: '13px', marginBottom: idx < projectMembers[p._id].length - 1 ? '6px' : '0', color: '#0066cc', fontWeight: '500' }}>
+                                                                👤 {member.name}
+                                                                <div style={{ fontSize: '11px', color: '#666', fontWeight: '400' }}>{member.email}</div>
+                                                            </div>
+                                                        ) : null
                                                     ))}
                                                 </div>
                                             ) : (
